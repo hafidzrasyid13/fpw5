@@ -27,16 +27,12 @@ public function create()
      * Store a newly created resource in storage.
      */
     
-public function store(Request $request)
+public function store(StoreCategoryRequest $request)
 {
-    $validated = $request->validate([
-        'name' => 'required|string|max:100|unique:categories,name',
-        'description' => 'nullable|string|max:255',
-    ]);
- 
-    Category::create($validated);
- 
-    return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan.');
+    // Menggunakan data yang sudah divalidasi
+    Category::create($request->validated()); 
+
+    return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan.'); 
 }
 
 
