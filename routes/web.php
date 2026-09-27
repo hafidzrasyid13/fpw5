@@ -44,3 +44,7 @@ Route::get('/dashboard', function () {
 Route::get('/pos/history', function () {
     return ' Riwayat Transaksi ';
 })->middleware(['auth', 'role:kasir'])->name('pos.history');
+
+
+Route::resource('categories', CategoryController::class);
+
