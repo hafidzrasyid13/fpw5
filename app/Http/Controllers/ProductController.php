@@ -8,6 +8,14 @@ use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
+    public function index()
+{
+    $products = Product::with('category')->latest()->paginate(10);
+ 
+    return view('master-data.product.index', compact('products'));
+}
+
+
     public function create()
     {
         $categories = Category::orderBy('name')->get();

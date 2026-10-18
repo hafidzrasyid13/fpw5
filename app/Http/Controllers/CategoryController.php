@@ -11,6 +11,7 @@ class CategoryController extends Controller
      * Display a listing of the resource.
      */
     
+
 public function index()
 {
     $categories = Category::latest()->paginate(10);
@@ -22,18 +23,19 @@ public function create()
     return view('master-data.category.create');
 }
  
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    
-public function store(StoreCategoryRequest $request)
+public function store(Request $request)
 {
-    // Menggunakan data yang sudah divalidasi
-    Category::create($request->validated()); 
-
-    return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan.'); 
+    $validated = $request->validate([
+        'name' => 'required|string|max:100|unique:categories,name',
+        'description' => 'nullable|string|max:255',
+    ]);
+ 
+    Category::create($validated);
+ 
+    return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan.');
 }
+
+
 
 
     /**
